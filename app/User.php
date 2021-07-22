@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
 
 
-    public function wishlist()
+    public function wishlists()
     {
         return $this->hasMany('App\Wishlist', 'user_id' ,'id');
     }

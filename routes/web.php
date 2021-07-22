@@ -17,9 +17,6 @@ Auth::routes();
 // Get request routes
 
 Route::get('/', 'HomeController@index')->name('home');
-
-Route::get('/newWishList/{id}', function(){ return view('newWishList');});
-Route::get('/edit/{id}', function(){ return view('editWishList');});
 Route::get('/logout', 'HomeController@logout');
 
 // Resource Controller Routes

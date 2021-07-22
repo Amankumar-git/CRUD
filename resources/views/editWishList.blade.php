@@ -22,24 +22,26 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             
-            <a class="btn btn-outline-secondary" href="/" role="button">My Wishlist</a>
+            <a class="btn btn-outline-secondary" href="/" role="button">Back</a>
             <a class="btn btn-outline-danger" style="margin-left:4px;" href="/logout" role="button">logout</a>
             
           </div>
         </div>
       </nav>
     <!-- End Navbar -->
-
-    <?php 
      
-      ?>
-      <form action="/wishlist/{{ Request::route('id') }}/edit" >
+      
+      <form action="/wishlist/{{$id}}" method="post">
         @csrf
+        @method('PUT')
         <div class="input-group mb-3">
-            <input type="text" name="newwishlist" class="form-control" placeholder="New wishlist" aria-label="New wishlist" aria-describedby="basic-addon1">
+            <input type="text" name="updateWish" class="form-control" value="{{$text}}" placeholder="New wishlist" aria-label="New wishlist" aria-describedby="basic-addon1">
           </div>
-
+          @error('updateWish')
+              <div class="alert alert-danger">{{$message}}</div>
+          @enderror
           <button type="submit">Edit wishlist</button>
+
       </form>
 
     <!-- Optional JavaScript; choose one of the two! -->

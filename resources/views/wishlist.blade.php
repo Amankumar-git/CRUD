@@ -19,7 +19,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a class="btn btn-outline-secondary" href="/newWishList/{{$id}}" role="button">New Wishlist</a>
+        <a class="btn btn-outline-secondary" href="/wishlist/create" role="button">New Wishlist</a>
         <a class="btn btn-outline-danger" style="margin-left:4px;" href="/logout" role="button">logout</a>
         
       </div>
@@ -44,7 +44,7 @@
           @foreach ($wishlists as $wishlist)     
           <tr class="wishlists">
             <td>{{$wishlist->wishlist_name}}</td>
-            <td><a class="btn btn-outline-success" href="/edit/{{$wishlist->id}}" role="button">Edit</a></td>
+            <td><a class="btn btn-outline-success" href="/wishlist/{{$wishlist->id}}/edit?text={{$wishlist->wishlist_name}}" role="button">Edit</a></td>
             <td><button class="btn btn-outline-danger  deleteWishlist" value="{{$wishlist->id}}"  type="button">Delete</button></td>
         </tr>
           @endforeach

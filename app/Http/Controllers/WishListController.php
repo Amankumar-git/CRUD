@@ -16,9 +16,8 @@ class WishListController extends Controller
      */
     public function index()
     {
-        $id = Auth::id(); 
-        $wishlist = User::find($id)->wishlist;
-        return view('wishlist')->with(['id' => $id, 'wishlists' => $wishlist]);
+        $wishlist = Auth::user()->wishlists;
+        return view('wishlist')->with(['wishlists' => $wishlist]);
     }
 
     /**
@@ -26,14 +25,9 @@ class WishListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Wishlist $wishlist)
-    {
-        $id = Auth::id();
-        $newwishlist = $request['newwishlist'];
-        $values = array('user_id' => $id, 'wishlist_name' => $newwishlist);
-        $wishlist->insert($values);
-        return redirect('wishlist');
-
+    public function create(Wishlist $wishlist) {
+        // used to display form
+        return view('newWishList');
     }
 
     /**
@@ -42,8 +36,18 @@ class WishListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request, Wishlist $wishlist) {
+        // used to add new data to database
+
+        $validatedData = $request->validate([
+            'newWish' => ['required', 'max:255'],
+           
+        ]);
+
+        $newWish = $request['newWish'];
+        $values = array('user_id' => Auth::id(), 'wishlist_name' => $newWish);
+        $wishlist->insert($values);
+        return redirect('/wishlist');  
     }
 
     /**
@@ -55,6 +59,7 @@ class WishListController extends Controller
     public function show(Wishlist $wishlist)
     {
         //
+
     }
 
     /**
@@ -63,15 +68,11 @@ class WishListController extends Controller
      * @param  \App\Wishlist  $wishlist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Wishlist $wishlist)
-    {
-        
-        $newWishlist = $request['newwishlist'];
-        $values = array('wishlist_name' => $newWishlist);
+    public function edit(Request $request, Wishlist $wishlist) {
+        // used to show edit form
+        $text = $request['text'];
+        return view('editWishList')->with(['id' => $wishlist->id, 'text' => $text]);
 
-        // updating values in wishlists table
-        $wishlist->update($values);
-        return redirect('wishlist');
     }
 
     /**
@@ -83,7 +84,16 @@ class WishListController extends Controller
      */
     public function update(Request $request, Wishlist $wishlist)
     {
-
+        // used to update existing data
+        $validatedData = $request->validate([
+            
+            'updateWish' => 'required|max:255',
+        ]);
+        $updateWish = $request['updateWish'];
+        $values = array('wishlist_name' => $updateWish);
+        // updating values in wishlists table
+        $wishlist->update($values);
+        return redirect('wishlist');
     }
 
     /**
